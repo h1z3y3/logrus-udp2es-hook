@@ -4,7 +4,7 @@
 
 ## Usage
 
-````
+```go
 import (
     "github.com/sirupsen/logrus"
     "github.com/h1z3y3/logrus-udp2es-hook"
@@ -33,7 +33,7 @@ func main() {
 
     logrus.Warning("Here is your message")
 }
-````
+```
 
 ## ChangeLog
 
