@@ -38,17 +38,20 @@ type logFormat map[string]interface{}
 
 // Fire is called when a log envent is fired.
 func (hook *Hook) Fire(entry *logrus.Entry) error {
-	msg, _ := entry.String()
+	logStr, _ := entry.String()
 
 	var logDetail logFormat
-	if err := json.Unmarshal([]byte(msg), &logDetail); err != nil {
-		fmt.Fprintf(os.Stderr, "Unable to unmarshal log string: %s", msg)
+	if err := json.Unmarshal([]byte(logStr), &logDetail); err != nil {
+		fmt.Fprintf(os.Stderr, "Unable to unmarshal log string: %s", logStr)
 		return err
 	}
 
 	logDetail["time"] = time.Now().UnixNano()
 	logDetail["level"] = entry.Level.String()
 	logDetail["index"] = hook.ESIndex
+	if message, ok := logDetail["msg"]; ok {
+		logDetail["message_analyzed"] = message
+	}
 
 	var payload []byte
 	payload, err := json.Marshal(logDetail)
