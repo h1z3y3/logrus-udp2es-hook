@@ -46,7 +46,7 @@ func (hook *Hook) Fire(entry *logrus.Entry) error {
 		return err
 	}
 
-	logDetail["time"] = time.Now().UnixNano()
+	logDetail["time"] = time.Now().Unix() * 1000
 	logDetail["level"] = entry.Level.String()
 	logDetail["index"] = hook.ESIndex
 	if message, ok := logDetail["msg"]; ok {
