@@ -34,13 +34,11 @@ func NewUdp2EsHook(hook *Hook) (*Hook, error) {
 	return hook, err
 }
 
-type logFormat map[string]interface{}
-
 // Fire is called when a log envent is fired.
 func (hook *Hook) Fire(entry *logrus.Entry) error {
 	logStr, _ := entry.String()
 
-	var logDetail logFormat
+	var logDetail map[string]interface{}
 	if err := json.Unmarshal([]byte(logStr), &logDetail); err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to unmarshal log string: %s", logStr)
 		return err
