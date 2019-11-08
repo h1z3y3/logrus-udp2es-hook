@@ -1,12 +1,13 @@
 package logrus_udp2es
 
 import (
-	"github.com/Sirupsen/logrus"
+	"os"
 	"net"
 	"fmt"
 	"time"
 	"encoding/json"
-	"os"
+
+	"github.com/sirupsen/logrus"
 )
 
 type connectInterface interface {
